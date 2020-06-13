@@ -19,7 +19,7 @@ exports.checkSpam = (comment, ip) => {
       //关键词用半角逗号分隔
       var words = process.env.SPAM_WORDS;
       words.split(',').forEach(item => {
-        if (comment.get('comment').indexOf(item) >= 0){P
+        if (comment.get('comment').indexOf(item) >= 0){
           console.log('检测到含有关键词!')
           comment.set('isSpam', true)
           comment.setACL(new AV.ACL({ '*': { read: false } }))
