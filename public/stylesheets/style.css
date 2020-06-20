@@ -147,6 +147,7 @@ li {
   line-height: 1.8;
   border: 1px dashed #fd5d3c;
   padding: 5px;
+  word-break: break-word;
 }
 
 .vcomment > p {

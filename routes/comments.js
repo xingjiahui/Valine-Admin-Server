@@ -22,6 +22,9 @@ router.get("/", function (req, res, next) {
             comment_list: results,
             moment: moment,
             zone: String(process.env.LEANCLOUD_REGION),
+            favicon: process.env.FAVICON
+              ? process.env.FAVICON
+              : "https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@v3.2.3/butterfly/img/favicon.ico",
           });
         },
         function (err) {
@@ -29,6 +32,9 @@ router.get("/", function (req, res, next) {
             res.render("comments", {
               title: process.env.SITE_NAME + "上的评论",
               comment_list: [],
+              favicon: process.env.FAVICON
+                ? process.env.FAVICON
+                : "https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@v3.2.3/butterfly/img/favicon.ico",
             });
           } else {
             next(err);
@@ -38,7 +44,11 @@ router.get("/", function (req, res, next) {
       .catch(next);
   } else {
     console.log("有用户成功找到了后台地址！", new Date());
-    res.redirect("/");
+    res.redirect("/", {
+      favicon: process.env.FAVICON
+        ? process.env.FAVICON
+        : "https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@v3.2.3/butterfly/img/favicon.ico",
+    });
   }
 });
 
@@ -82,7 +92,11 @@ router.get("/delete", function (req, res, next) {
       )
       .catch(next);
   } else {
-    res.redirect("/");
+    res.redirect("/", {
+      favicon: process.env.FAVICON
+        ? process.env.FAVICON
+        : "https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@v3.2.3/butterfly/img/favicon.ico",
+    });
   }
 });
 

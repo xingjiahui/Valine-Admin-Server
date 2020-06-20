@@ -47,6 +47,9 @@ app.get("/", function (req, res) {
     res.render("index", {
       ICP: process.env.ICP ? process.env.ICP : "",
       INFO: process.env.INFO ? process.env.INFO : "",
+      favicon: process.env.FAVICON
+        ? process.env.FAVICON
+        : "https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@v3.2.3/butterfly/img/favicon.ico",
     });
   }
 });
