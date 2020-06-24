@@ -13,6 +13,21 @@ exports.checkSpam = (comment, ip) => {
     comment.set('isSpam', true)
     comment.save()
     return
+  } else {
+    if (process.env.SPAM_WORDS) {
+      console.log('检测到添加屏蔽关键词，进行关键词检验')
+      //关键词用半角逗号分隔
+      var words = process.env.SPAM_WORDS;
+      words.split(',').forEach(item => {
+        if (comment.get('comment').indexOf(item) >= 0){
+          console.log('检测到含有关键词!')
+          comment.set('isSpam', true)
+          comment.setACL(new AV.ACL({ '*': { read: false } }))
+          // 阻止被屏蔽的评论提交
+          comment.destroy();
+        }
+      })
+    }
   }
   akismetClient.verifyKey(function (err, valid) {
     if (err) console.log('Akismet key 异常:', err.message)
