@@ -23,9 +23,9 @@ exports.checkSpam = (comment, ip) => {
           console.warn("检测到含有关键词!");
           comment.set("isSpam", true);
           comment.setACL(new AV.ACL({ "*": { read: false } }));
+          comment.save();
           // 阻止被屏蔽的评论提交
           // comment.destroy();
-          comment.save();
         }
       });
     }
