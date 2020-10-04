@@ -5,3 +5,5 @@
 ## License
 
 [MIT License](https://github.com/panjunwen/LeanComment/blob/master/LICENSE)
+
+由于不在使用Valine评论，因此放弃维护！
