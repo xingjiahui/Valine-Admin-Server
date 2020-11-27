@@ -146,7 +146,7 @@ exports.notice = (comment) => {
 
         let qq = "";
         if (process.env.QQ != null) {
-            qq = "&qq=" + process.env.QQ;
+            qq = "&group_id=" + process.env.QQ;
         }
         const scContent = `👉您的 ${ process.env.SITE_NAME } 上有新评论了！
 😋${name} 发表评论：
@@ -164,9 +164,9 @@ ${$(
 ${comment.get("objectId") + ' ' + comment.get("rid")}`;
         axios
             .get(
-                `https://qmsg.zendee.cn:443/send/${
+                `http://api.qqpusher.yanxianjun.com/send_group_msg?token=${
                     process.env.QMSG_KEY
-                }?msg=${encodeURIComponent(scContent)}` + qq
+                }&message=${encodeURIComponent(scContent)}` + qq
             )
             .then(function (response) {
                 if (response.status === 200 && response.data.success === true)
