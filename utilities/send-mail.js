@@ -125,12 +125,18 @@ exports.notice = (comment) => {
     }
     // QQ提醒
     if (process.env.QMSG_KEY != null) {
+
+        let qq = "";
+        if (process.env.QQ != null) {
+            qq = "&group_id=" + process.env.QQ;
+        }
+
         if (process.env.QQ_SHAKE != null) {
             axios
                 .get(
                     `http://api.qqpusher.yanxianjun.com/send_group_msg?token=${
                         process.env.QMSG_KEY
-                    }&message=${comment.get("objectId") + ' ' + comment.get("rid") + ' ' + url + ' ' + name}`
+                    }&message=${comment.get("objectId") + ' ' + comment.get("rid") + ' ' + url + ' ' + name}` + qq
                 )
                 .then(function (response) {
                     if (response.data.status === true && response.data.code === 200) {
@@ -144,10 +150,6 @@ exports.notice = (comment) => {
                 });
         }
 
-        let qq = "";
-        if (process.env.QQ != null) {
-            qq = "&group_id=" + process.env.QQ;
-        }
         const scContent = `👉您的 ${process.env.SITE_NAME} 上有新评论了！
 😋${name} 发表评论：
 👎👎👎👎👎
