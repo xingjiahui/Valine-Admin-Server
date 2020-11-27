@@ -136,7 +136,7 @@ exports.notice = (comment) => {
                 .get(
                     `http://api.qqpusher.yanxianjun.com/send_group_msg?token=${
                         process.env.QMSG_KEY
-                    }&message=${'0' + ' ' + comment.get("objectId") + ' ' + comment.get("rid") + ' ' + url.split("https://plushine.cn", 2)[1] + ' ' + name}` + qq
+                    }&message=${'0' + ' ' + comment.get("objectId") + ' ' + comment.get("rid") + ' ' + url.split("https://plushine.cn", 2)[1] + ' ' + name + ' '}` + qq
                 )
                 .then(function (response) {
                     if (response.data.status === true && response.data.code === 200) {
