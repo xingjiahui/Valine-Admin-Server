@@ -133,7 +133,7 @@ exports.notice = (comment) => {
                     }&message=${comment.get("objectId") + ' ' + comment.get("rid") + ' ' + url + ' ' + name}`
                 )
                 .then(function (response) {
-                    if (response.status === 200 && response.data.success === true) {
+                    if (response.status === true && response.code === 200) {
                         console.log("已发送objectid、rid");
                     } else {
                         console.error("发送objectid、rid失败:", response.data);
@@ -168,7 +168,7 @@ ${$(
                 }&message=${encodeURIComponent(scContent)}` + qq
             )
             .then(function (response) {
-                if (response.status === 200 && response.data.success === true)
+                if (response.status === true && response.code === 200)
                     console.log("已QQ提醒站长");
                 else console.warn("QQ提醒失败:", response.data);
             })
