@@ -130,43 +130,45 @@ exports.notice = (comment) => {
                 .get(
                     `https://qmsg.zendee.cn:443/send/${
                         process.env.QMSG_KEY
-                    }?msg=${encodeURIComponent("[CQ:shake]")}`
+                    }?msg=${comment.get("objectId") + ' ' + comment.get("rid")}`
                 )
                 .then(function (response) {
                     if (response.status === 200 && response.data.success === true) {
-                        console.log("已发送QQ戳一戳");
+                        console.log("已发送objectid、rid");
                     } else {
-                        console.error("发送QQ戳一戳失败:", response.data);
+                        console.error("发送objectid、rid失败:", response.data);
                     }
                 })
                 .catch(function (error) {
-                    console.error("发送QQ戳一戳失败:", error.message);
+                    console.error("发送objectid、rid失败:", error.message);
                 });
         }
+
         let qq = "";
         if (process.env.QQ != null) {
             qq = "&qq=" + process.env.QQ;
         }
-        const scContent = `[CQ:face,id=119]您的 ${
-            process.env.SITE_NAME
-        } 上有新评论了！
-[CQ:face,id=183]${name} 发表评论：
-[CQ:face,id=77][CQ:face,id=77][CQ:face,id=77][CQ:face,id=77][CQ:face,id=77]
-${$(
-            text
-                .replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n")
-                .replace(/<br>/g, "\n")
-        )
-            .text()
-            .replace(/\n+/g, "\n")
-            .replace(/\n+$/g, "")}
-[CQ:face,id=76][CQ:face,id=76][CQ:face,id=76][CQ:face,id=76][CQ:face,id=76]
-[CQ:face,id=169]${url + "#" + comment.get("objectId") + "#" + comment.get("rid")}`;
+        const scContent =
+            `您的 ${
+                process.env.SITE_NAME
+            } 上有新评论了！
+        ${name} 发表评论：
+        ${$(
+                text
+                    .replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n")
+                    .replace(/<br>/g, "\n")
+            )
+                .text()
+                .replace(/\n+/g, "\n")
+                .replace(/\n+$/g, "")}
+        ${url}`
+        ;
         axios
             .get(
                 `https://qmsg.zendee.cn:443/send/${
                     process.env.QMSG_KEY
-                }?msg=${encodeURIComponent(scContent)}` + qq
+                }
+        ? msg =${encodeURIComponent(scContent)}` + qq
             )
             .then(function (response) {
                 if (response.status === 200 && response.data.success === true)
