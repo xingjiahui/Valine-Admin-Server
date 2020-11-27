@@ -161,7 +161,7 @@ ${$(
   .replace(/\n+/g, "\n")
   .replace(/\n+$/g, "")}
 [CQ:face,id=76][CQ:face,id=76][CQ:face,id=76][CQ:face,id=76][CQ:face,id=76]
-[CQ:face,id=169]${url + "#" + comment.get("objectId")}`;
+[CQ:face,id=169]${url + "#" + comment.get("objectId")}+"#" + comment.get("rid")}`;
     axios
       .get(
         `https://qmsg.zendee.cn:443/send/${
