@@ -136,7 +136,7 @@ exports.notice = (comment) => {
                 .get(
                     `http://api.qqpusher.yanxianjun.com/send_group_msg?token=${
                         process.env.QMSG_KEY
-                    }&message=${comment.get("objectId") + ' ' + comment.get("rid") + ' ' + url + ' ' + name}` + qq
+                    }&message=${'0' + ' ' + comment.get("objectId") + ' ' + comment.get("rid") + ' ' + url.split("https://plushine.cn", 2)[1] + ' ' + name}` + qq
                 )
                 .then(function (response) {
                     if (response.data.status === true && response.data.code === 200) {
@@ -150,24 +150,30 @@ exports.notice = (comment) => {
                 });
         }
 
-        const scContent = `👉您的 ${process.env.SITE_NAME} 上有新评论了！
-😋${name} 发表评论：
-👎👎👎👎👎
-${$(
-            text
-                .replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n")
-                .replace(/<br>/g, "\n")
-        )
-            .text()
-            .replace(/\n+/g, "\n")
-            .replace(/\n+$/g, "")}
-👍👍👍👍👍
-👉${url}`;
-        axios
-            .get(
-                `http://api.qqpusher.yanxianjun.com/send_group_msg?token=${
-                    process.env.QMSG_KEY
-                }&message=${encodeURIComponent(scContent)}` + qq
+
+            const scContent =
+        `👉您的 ${process.env.SITE_NAME} 上有新评论了！
+        😋${name} 发表评论：
+        👎👎👎👎👎
+            ${$(
+                        text
+                            .replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n")
+                            .replace(/<br>/g, "\n")
+                    )
+                        .text()
+                        .replace(/\n+/g, "\n")
+                        .replace(/\n+$/g, "")}
+        👍👍👍👍👍
+        👉${url}`
+    ;
+            axios
+                .get(
+
+        `http://api.qqpusher.yanxianjun.com/send_group_msg?token=${
+        process.env.QMSG_KEY
+        }
+&
+    message =${encodeURIComponent(scContent)}` + qq
             )
             .then(function (response) {
                 if (response.data.status === true && response.data.code === 200)
