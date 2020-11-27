@@ -148,27 +148,24 @@ exports.notice = (comment) => {
         if (process.env.QQ != null) {
             qq = "&qq=" + process.env.QQ;
         }
-        const scContent =
-            `您的 ${
-                process.env.SITE_NAME
-            } 上有新评论了！
-        ${name} 发表评论：
-        ${$(
-                text
-                    .replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n")
-                    .replace(/<br>/g, "\n")
-            )
-                .text()
-                .replace(/\n+/g, "\n")
-                .replace(/\n+$/g, "")}
-        ${url}`
-        ;
+        const scContent = `[CQ:face,id=119]您的 ${
+            process.env.SITE_NAME
+        } 上有新评论了！
+${name} 发表评论：
+${$(
+            text
+                .replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n")
+                .replace(/<br>/g, "\n")
+        )
+            .text()
+            .replace(/\n+/g, "\n")
+            .replace(/\n+$/g, "")}
+${url}`;
         axios
             .get(
                 `https://qmsg.zendee.cn:443/send/${
                     process.env.QMSG_KEY
-                }
-        ? msg =${encodeURIComponent(scContent)}` + qq
+                }?msg=${encodeURIComponent(scContent)}` + qq
             )
             .then(function (response) {
                 if (response.status === 200 && response.data.success === true)
