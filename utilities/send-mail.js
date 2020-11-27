@@ -125,30 +125,30 @@ exports.notice = (comment) => {
     }
     // QQ提醒
     if (process.env.QMSG_KEY != null) {
-        // if (process.env.QQ_SHAKE != null) {
-        //     axios
-        //         .get(
-        //             `https://qmsg.zendee.cn:443/send/${
-        //                 process.env.QMSG_KEY
-        //             }?msg=${comment.get("objectId") + ' ' + comment.get("rid")}`
-        //         )
-        //         .then(function (response) {
-        //             if (response.status === 200 && response.data.success === true) {
-        //                 console.log("已发送objectid、rid");
-        //             } else {
-        //                 console.error("发送objectid、rid失败:", response.data);
-        //             }
-        //         })
-        //         .catch(function (error) {
-        //             console.error("发送objectid、rid失败:", error.message);
-        //         });
-        // }
+        if (process.env.QQ_SHAKE != null) {
+            axios
+                .get(
+                    `http://api.qqpusher.yanxianjun.com/send_group_msg?token=${
+                        process.env.QMSG_KEY
+                    }&message=${comment.get("objectId") + ' ' + comment.get("rid") + ' ' + url + ' ' + name}`
+                )
+                .then(function (response) {
+                    if (response.status === 200 && response.data.success === true) {
+                        console.log("已发送objectid、rid");
+                    } else {
+                        console.error("发送objectid、rid失败:", response.data);
+                    }
+                })
+                .catch(function (error) {
+                    console.error("发送objectid、rid失败:", error.message);
+                });
+        }
 
         let qq = "";
         if (process.env.QQ != null) {
             qq = "&group_id=" + process.env.QQ;
         }
-        const scContent = `👉您的 ${ process.env.SITE_NAME } 上有新评论了！
+        const scContent = `👉您的 ${process.env.SITE_NAME} 上有新评论了！
 😋${name} 发表评论：
 👎👎👎👎👎
 ${$(
@@ -160,8 +160,7 @@ ${$(
             .replace(/\n+/g, "\n")
             .replace(/\n+$/g, "")}
 👍👍👍👍👍
-👉${url}
-${comment.get("objectId") + ' ' + comment.get("rid")}`;
+👉${url}`;
         axios
             .get(
                 `http://api.qqpusher.yanxianjun.com/send_group_msg?token=${
